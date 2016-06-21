@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const fs      = require('fs');
+const dotenv = require('dotenv');
 const path    = require('path'),
       join    = path.join,
       resolve = path.resolve;
@@ -67,4 +68,27 @@ config.module.loaders.push({
   loader: 'style!css'
 })
 
+const dotEnvVars = dotenv.config();
+const environmentEnv = dotenv.config({
+  path: join(root, 'config', `${NODE_ENV}.config.js`),
+  silent: true,
+});
+
+const envVariables =
+    Object.assign({}, dotEnvVars, environmentEnv);
+
+const defines =
+  Object.keys(envVariables)
+  .reduce((memo, key) => {
+    const val = JSON.stringify(envVariables[key]);
+    memo[`__${key.toUpperCase()}__`] = val;
+    return memo;
+  }, {
+    __NODE_ENV__: JSON.stringify(NODE_ENV)
+  });
+
 module.exports = config;
+
+config.plugins = [
+  new webpack.DefinePlugin(defines)
+].concat(config.plugins);
