@@ -1,6 +1,7 @@
 // Karma configuration
 // Generated on Tue Jun 21 2016 20:41:37 GMT+0100 (BST)
 var webpackConfig = require('./webpack.config');
+var argv = require('yargs').argv;
 
 module.exports = function(config) {
   config.set({
@@ -81,5 +82,7 @@ module.exports = function(config) {
     webpackServer: {
         noInfo: true
     },
+
+    singleRun: !argv.watch
   })
 }
