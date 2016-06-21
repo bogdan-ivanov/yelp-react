@@ -17,18 +17,20 @@ module.exports = function(config) {
               'karma-chai', 
               'karma-webpack',  
               'karma-phantomjs-launcher',
-              'karma-spec-reporter'
+              'karma-spec-reporter',
+              'karma-sourcemap-loader'
     ],
 
     // list of files / patterns to load in the browser
     files: [
+      'tests.webpack.js'
     ],
 
 
     // list of files to exclude
-    exclude: [
-        'tests.webpack.js'
-    ],
+    // exclude: [
+    //     'tests.webpack.js'
+    // ],
 
 
     // preprocess matching files before serving them to the browser
